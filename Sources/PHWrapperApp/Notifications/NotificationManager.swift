@@ -137,7 +137,6 @@ extension NotificationManagerComponent: NotificationManager {
 
 // MARK: - UNUserNotificationCenterDelegate
 extension NotificationManagerComponent: UNUserNotificationCenterDelegate {
-	
 	func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
 		completionHandler([.alert])
 	}

@@ -71,10 +71,8 @@ extension WebViewController {
 		}
 		
 		if Bundle.main.bundleIdentifier == "com.pocketscience.zentralplus" {
-			
 			notificationManager.requestAuthorization { _ in }
 		}
-
 	}
 	
 	override func viewDidAppear(_ animated: Bool) {
@@ -91,8 +89,6 @@ extension WebViewController {
 	func load(_ url: URL) {
 		print("Loading: \(url.absoluteString)")
 		webView.load(URLRequest(url: url))
-
-		notificationManager.subscribe(to: "TEST-09-2021")
 		
 		showRatingController()
 	}
@@ -215,8 +211,6 @@ private extension WebViewController {
 		notificationManager.onMessageReceived = { [weak self] url in
 			self?.load(url)
 		}
-		
-		
 	}
 
 	@objc func onRefresh(_ sender: Any) {
