@@ -28,6 +28,7 @@ let package = Package(
             name: "PHWrapperApp",
             dependencies: [
 				"Inject",
+				.product(name: "FirebaseAnalytics", package: "Firebase"),
 				.product(name: "FirebaseRemoteConfig", package: "Firebase"),
 				.product(name: "FirebaseMessaging", package: "Firebase"),
 			],
