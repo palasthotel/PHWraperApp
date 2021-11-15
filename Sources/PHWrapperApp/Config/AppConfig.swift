@@ -10,30 +10,38 @@ import Inject
 import UIKit
 
 
-public protocol AppConfig {
-	var hasNativeNavigationBar: Bool { get }
-	var supportsNativeReload: Bool { get }
-	var applicationTintColor: UIColor { get }
-	var credentials: (user: String, password: String) { get }
-	var additionalUserScripts: [String] { get }
-	var additionalMessageHandlers: [MessageHandler] { get }
-}
-
-
-public extension AppConfig {
-	var hasNativeNavigationBar: Bool {
-		false
+public struct AppConfig {
+	
+	public init(hasNativeNavigationBar: Bool = false,
+				supportsNativeReload: Bool = false,
+				applicationTintColor: UIColor = .link,
+				credentials: (user: String, password: String),
+				additionalUserScripts: [String] = [],
+				additionalMessageHandlers: [MessageHandler] = []
+	) {
+		self.hasNativeNavigationBar = hasNativeNavigationBar
+		self.supportsNativeReload = supportsNativeReload
+		self.applicationTintColor = applicationTintColor
+		self.credentials = credentials
+		self.additionalUserScripts = additionalUserScripts
+		self.additionalMessageHandlers = additionalMessageHandlers
 	}
-	var supportsNativeReload: Bool {
-		false
-	}
-	var applicationTintColor: UIColor {
-		.link
-	}
-	var additionalUserScripts: [String] {
-		[]
-	}
-	var additionalMessageHandlers: [MessageHandler] {
-		[]
-	}
+	
+	/// Currently not supported
+	var hasNativeNavigationBar: Bool
+	
+	/// Currently not supported
+	var supportsNativeReload: Bool
+	
+	/// Currently not supported
+	var applicationTintColor: UIColor
+	
+	/// Login credentials to bypass .htaccess protection
+	var credentials: (user: String, password: String)
+	
+	/// Filenames of additional .js scripts in the main bundle
+	var additionalUserScripts: [String]
+	
+	/// Instances of additional handlers for WebKit communication. Must implement the `MessageHandler` protocol.
+	var additionalMessageHandlers: [MessageHandler]
 }

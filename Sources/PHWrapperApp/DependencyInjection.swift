@@ -8,8 +8,9 @@
 import Foundation
 import Inject
 
-func dependencyInjection() {
+func dependencyInjection(with config: AppConfig) {
 	Container.default.register {
+		Registration(config)
 		Registration(LoginMessageHandler() as MessageHandler)
 		Registration(NotificationManagerComponent() as NotificationManager)
 		Registration(SettingsMessageHandler() as MessageHandler)

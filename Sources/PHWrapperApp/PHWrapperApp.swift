@@ -14,8 +14,8 @@ public enum PHWrapperApp { }
 
 
 extension PHWrapperApp {
-	public static func instantiate() -> UIViewController {
-		dependencyInjection()
+	public static func instantiate(with config: AppConfig) -> UIViewController {
+		dependencyInjection(with: config)
 		
 		return WebViewController()
 	}
