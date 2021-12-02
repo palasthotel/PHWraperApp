@@ -17,7 +17,9 @@ public struct AppConfig {
 				applicationTintColor: UIColor = .link,
 				credentials: (user: String, password: String),
 				additionalUserScripts: [String] = [],
-				additionalMessageHandlers: [MessageHandler] = []
+				additionalMessageHandlers: [MessageHandler] = [],
+				testTopic: String? = nil,
+				requestNotificationAccessOnStart: Bool = false
 	) {
 		self.hasNativeNavigationBar = hasNativeNavigationBar
 		self.supportsNativeReload = supportsNativeReload
@@ -25,6 +27,8 @@ public struct AppConfig {
 		self.credentials = credentials
 		self.additionalUserScripts = additionalUserScripts
 		self.additionalMessageHandlers = additionalMessageHandlers
+		self.testTopic = testTopic
+		self.requestNotificationAccessOnStart = requestNotificationAccessOnStart
 	}
 	
 	/// Currently not supported
@@ -44,4 +48,10 @@ public struct AppConfig {
 	
 	/// Instances of additional handlers for WebKit communication. Must implement the `MessageHandler` protocol.
 	var additionalMessageHandlers: [MessageHandler]
+	
+	/// If set, the web app subscribes to this messaging topic. For testing purposes only.
+	var testTopic: String?
+	
+	/// Defines if the app should ask the user for notification access automatically on the first launch of the app.
+	var requestNotificationAccessOnStart: Bool
 }

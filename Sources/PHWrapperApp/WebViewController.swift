@@ -70,8 +70,12 @@ extension WebViewController {
 			}
 		}
 		
-		if Bundle.main.bundleIdentifier == "com.pocketscience.zentralplus" {
+		if appConfig.requestNotificationAccessOnStart {
 			notificationManager.requestAuthorization { _ in }
+		}
+		
+		if let topic = appConfig.testTopic {
+			notificationManager.subscribe(to: topic)
 		}
 	}
 	
@@ -261,9 +265,14 @@ extension WebViewController: WKUIDelegate, WKNavigationDelegate {
 
 		if firebaseConfig.isWhitelisted(destinationURL) {
 			decisionHandler(.allow)
+			
+			if navigationAction.targetFrame == nil {
+				load(destinationURL)
+			}
+			
 			return
 		}
-
+				
 		UIApplication.shared.open(destinationURL, options: [:])
 		decisionHandler(.cancel)
 	}

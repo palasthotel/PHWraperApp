@@ -22,7 +22,7 @@ extension NotificationsMessageHandler {
 		guard let data = message.body as? [String: Any] else { return }
 		guard let index = data["idx"] as? Int else { return }
 		guard let topic = data["topic"] as? String else { return }
-				
+		
 		switch message.name {
 		case "subscribe":
 			notificationManager.subscribe(to: topic)
