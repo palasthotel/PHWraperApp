@@ -84,6 +84,8 @@ extension WebViewController {
 		
 		let statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0.0
 		statusBarHeightConstraint.constant = statusBarHeight
+		
+		notificationManager.subscribe(to: "firebase-notification-debug")
 	}
 }
 

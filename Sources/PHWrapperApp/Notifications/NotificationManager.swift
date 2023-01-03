@@ -141,19 +141,26 @@ extension NotificationManagerComponent: UNUserNotificationCenterDelegate {
 		completionHandler([.alert])
 	}
 	
-	func userNotificationCenter(_: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler _: @escaping () -> Void) {
+	func userNotificationCenter(_: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
 		let content = response.notification.request.content
+		
 		guard let permalink = content.userInfo["permalink"] as? String else {
+			completionHandler()
 			return
 		}
+		
 		guard let url = URL(string: permalink) else {
+			completionHandler()
 			return
 		}
+		
 		if onMessageReceived == nil {
 			savedURL = url
 		} else {
 			onMessageReceived?(url)
 		}
+		
+		completionHandler()
 	}
 }
 
