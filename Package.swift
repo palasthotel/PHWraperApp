@@ -19,7 +19,7 @@ let package = Package(
 				 from: "3.0.0"),
 		.package(name: "Firebase",
 				 url: "https://github.com/firebase/firebase-ios-sdk.git",
-				 from: "9.0.0"),
+				 from: "10.0.0"),
 	],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.

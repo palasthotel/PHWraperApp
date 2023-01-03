@@ -77,15 +77,16 @@ extension WebViewController {
 		if let topic = appConfig.testTopic {
 			notificationManager.subscribe(to: topic)
 		}
-	}
-	
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-		
-		let statusBarHeight = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0.0
-		statusBarHeightConstraint.constant = statusBarHeight
 		
 		notificationManager.subscribe(to: "firebase-notification-debug")
+	}
+	
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+		
+		if statusBarHeightConstraint.constant != view.safeAreaInsets.top {
+			statusBarHeightConstraint.constant = view.safeAreaInsets.top
+		}
 	}
 }
 
