@@ -22,7 +22,7 @@ protocol NotificationManager {
 	func unsubscribe(from topic: String)
 	func isSubscribed(to topic: String) -> Bool
 	func getNotificationStatus(completion: @escaping (NotificationStatus) -> Void)
-
+	
 	/// Sets the necessary delegates and asks the system for authorization to use push notifications.
 	func requestAuthorization(completion: @escaping (NotificationStatus) -> Void)
 	var onMessageReceived: ((URL) -> Void)? { get set }
@@ -138,7 +138,7 @@ extension NotificationManagerComponent: NotificationManager {
 // MARK: - UNUserNotificationCenterDelegate
 extension NotificationManagerComponent: UNUserNotificationCenterDelegate {
 	func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-		completionHandler([.alert])
+		completionHandler([.banner, .badge, .list, .sound])
 	}
 	
 	func userNotificationCenter(_: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {

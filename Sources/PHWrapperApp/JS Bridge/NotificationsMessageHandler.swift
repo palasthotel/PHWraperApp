@@ -12,7 +12,15 @@ import Inject
 
 
 final class NotificationsMessageHandler: NSObject, MessageHandler {
-	var functionNames: [String] { ["subscribe", "unsubscribe", "isSubscribed", "getNotificationsStatus", "requestNotificationsPermission"] }
+	var functionNames: [String] { [
+		"subscribe",
+		"unsubscribe",
+		"isSubscribed",
+		"getNotificationsStatus",
+		"requestNotificationsPermission",
+		"isNotificationsEnabled",
+		"setNotificationsEnabled",
+	] }
 	
 	@Inject var notificationManager: NotificationManager
 }
@@ -41,7 +49,26 @@ extension NotificationsMessageHandler {
 			notificationManager.requestAuthorization { status in
 				message.webView?.callback(index: index, value: status.rawValue)
 			}
+		case "isNotificationsEnabled":
+			notificationManager.getNotificationStatus { status in
+				switch status {
+				case .allowed:
+					message.webView?.callback(index: index, value: "true")
+				default:
+					message.webView?.callback(index: index, value: "false")
+				}
+			}
+		case "setNotificationsEnabled":
+			notificationManager.requestAuthorization { status in
+				switch status {
+				case .allowed:
+					message.webView?.callback(index: index, value: "true")
+				default:
+					message.webView?.callback(index: index, value: "false")
+				}
+			}
 		default:
+			print("Message: '\(message.name)' not handled")
 			break
 		}
 	}
