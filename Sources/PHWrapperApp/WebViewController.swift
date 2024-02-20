@@ -79,6 +79,9 @@ extension WebViewController {
 		}
 		
 		notificationManager.subscribe(to: "firebase-notification-debug")
+		
+		NotificationCenter.default.addObserver(self, selector: #selector(handleAppNotification), name: UIApplication.didBecomeActiveNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(handleAppNotification), name: UIApplication.didEnterBackgroundNotification, object: nil)
 	}
 	
 	override func viewDidLayoutSubviews() {
@@ -242,7 +245,24 @@ private extension WebViewController {
 			self.view.layoutIfNeeded()
 		}
 	}
-	
+
+	@objc func handleAppNotification(_ notification: Notification) {
+		switch notification.name {
+		// Reload after timeinterval
+		case UIApplication.didBecomeActiveNotification:
+			guard let timeInterval = appConfig.reloadAfterTimeInterval else { return }
+			let lastBackgroundTimestamp = UserDefaults.standard.double(forKey: "app-did-enter-background")
+			
+			if lastBackgroundTimestamp + timeInterval < Date.now.timeIntervalSinceReferenceDate, let url = self.firebaseConfig.getURL(for: .startURL) {
+				self.navigationItem.leftBarButtonItem?.isEnabled = true
+				self.load(url)
+			}
+		case UIApplication.didEnterBackgroundNotification:
+			UserDefaults.standard.setValue(Date.now.timeIntervalSinceReferenceDate, forKey: "app-did-enter-background")
+		default:
+			break
+		}
+	}
 }
 
 

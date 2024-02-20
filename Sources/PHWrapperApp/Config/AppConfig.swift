@@ -19,7 +19,8 @@ public struct AppConfig {
 				additionalUserScripts: [String] = [],
 				additionalMessageHandlers: [MessageHandler] = [],
 				testTopic: String? = nil,
-				requestNotificationAccessOnStart: Bool = false
+				requestNotificationAccessOnStart: Bool = false,
+				reloadAfterTimeInterval: TimeInterval? = nil
 	) {
 		self.hasNativeNavigationBar = hasNativeNavigationBar
 		self.supportsNativeReload = supportsNativeReload
@@ -29,6 +30,7 @@ public struct AppConfig {
 		self.additionalMessageHandlers = additionalMessageHandlers
 		self.testTopic = testTopic
 		self.requestNotificationAccessOnStart = requestNotificationAccessOnStart
+		self.reloadAfterTimeInterval = reloadAfterTimeInterval
 	}
 	
 	/// Currently not supported
@@ -54,4 +56,7 @@ public struct AppConfig {
 	
 	/// Defines if the app should ask the user for notification access automatically on the first launch of the app.
 	var requestNotificationAccessOnStart: Bool
+	
+	/// If this property is set, the webview reloads after the app has spent at least the specified amount of time in the background.
+	var reloadAfterTimeInterval: TimeInterval?
 }
