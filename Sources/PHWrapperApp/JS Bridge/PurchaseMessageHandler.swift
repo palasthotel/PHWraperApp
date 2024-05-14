@@ -41,6 +41,8 @@ extension PurchaseMessageHandler {
 
 private extension PurchaseMessageHandler {
 	func purchase(_ offeringID: String, packageID: String) {
+		guard Purchases.isConfigured else { return }
+		
 		Task.detached { @MainActor [weak self] in
 			do {
 				if let apiKey = self?.config.revenueCatAPIKey, !apiKey.isEmpty, let uid = PHFirebase.userID {

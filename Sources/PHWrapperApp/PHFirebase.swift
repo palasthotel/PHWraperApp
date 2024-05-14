@@ -85,7 +85,7 @@ extension PHFirebase {
 		@Inject var config: AppConfig
 		if !config.revenueCatAPIKey.isEmpty {
 			Purchases.configure(withAPIKey: config.revenueCatAPIKey, appUserID: userID)
-			try await Purchases.shared.logIn(userID)
+			let _ = try await Purchases.shared.logIn(userID)
 		}
 	}
 	
