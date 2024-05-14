@@ -21,9 +21,11 @@ class WebViewController: UIViewController {
 	
 	private var handlers: [MessageHandler] = [
 		LoginMessageHandler(),
+		DeviceIdentifierMessageHandler(),
 		NavigationInfoHandler(),
 		NotificationsMessageHandler(),
 		SettingsMessageHandler(),
+		PurchaseMessageHandler(),
 	]
 
 	
@@ -98,6 +100,7 @@ extension WebViewController {
 extension WebViewController {
 	func load(_ url: URL) {
 		print("Loading: \(url.absoluteString)")
+		
 		webView.load(URLRequest(url: url))
 		
 		showRatingController()
@@ -165,7 +168,10 @@ private extension WebViewController {
 		webView.navigationDelegate = self
 		webView.uiDelegate = self
 		webView.allowsLinkPreview = false
-
+		if #available(iOS 16.4, *) {
+			webView.isInspectable = true
+		}
+		
 		if appConfig.supportsNativeReload {
 			webView.scrollView.refreshControl = refreshControl
 		} else {

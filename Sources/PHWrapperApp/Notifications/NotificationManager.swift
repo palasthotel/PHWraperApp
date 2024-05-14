@@ -58,6 +58,8 @@ class NotificationManagerComponent: NSObject {
 		UserDefaults.standard.register(keyedDefaults: [
 			.topics: []
 		])
+		
+
 	}
 	
 	func onResolved() {
@@ -68,6 +70,7 @@ class NotificationManagerComponent: NSObject {
 		
 	}
 }
+
 
 // MARK: - NotificationsHandler
 extension NotificationManagerComponent: NotificationManager {
@@ -133,6 +136,14 @@ extension NotificationManagerComponent: NotificationManager {
 	}
 }
 
+
+extension NotificationManagerComponent: MessagingDelegate {
+	func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+		Task.detached {
+			try await PHFirebase.updateFCMToken()
+		}
+	}
+}
 
 
 // MARK: - UNUserNotificationCenterDelegate

@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 import FirebaseMessaging
-
+import RevenueCat
 
 public enum PHWrapperApp { }
 
@@ -16,7 +16,7 @@ public enum PHWrapperApp { }
 extension PHWrapperApp {
 	public static func instantiate(with config: AppConfig) -> UIViewController {
 		dependencyInjection(with: config)
-		
+				
 		return WebViewController()
 	}
 	

@@ -34,6 +34,11 @@ extension FirebaseConfig {
 	}
 		
 	func getURL(for key: RemoteConfigKey) -> URL? {
+		if let urlString = UserDefaults.standard.string(forKey: "overrideStartURL"),
+		   let url = URL(string: urlString) {
+			return url
+		}
+		
 		guard let urlString = remoteConfig.configValue(forKey: key).stringValue else {
 			print("remote config value not found")
 			return nil
@@ -44,11 +49,6 @@ extension FirebaseConfig {
 			return nil
 		}
 		
-		if let urlString = UserDefaults.standard.string(forKey: "overrideStartURL"),
-		   let url = URL(string: urlString) {
-			return url
-		}
-
 		return url
 	}
 

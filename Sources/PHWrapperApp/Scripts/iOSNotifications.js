@@ -70,7 +70,3 @@ iOSNotifications.isSubscribed = function(topic) {
 	});
 	return promise;
 }
-
-iOSNotifications.shareCurrentURL = function() {
-	window.webkit.messageHandlers.shareCurrentURL.postMessage({});
-}
