@@ -40,6 +40,10 @@ extension PHFirebase {
 
 	}
 	
+	static var isLoggedIn: Bool {
+		userID != nil
+	}
+	
 	static func disableLogging() {
 		FirebaseConfiguration.shared.setLoggerLevel(.min)
 	}

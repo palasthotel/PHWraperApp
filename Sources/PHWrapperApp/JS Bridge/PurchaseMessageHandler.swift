@@ -41,11 +41,13 @@ extension PurchaseMessageHandler {
 
 private extension PurchaseMessageHandler {
 	func purchase(_ offeringID: String, packageID: String) {
-		guard Purchases.isConfigured else { return }
+		guard PHFirebase.isLoggedIn else {
+			return
+		}
 		
 		Task.detached { @MainActor [weak self] in
 			do {
-				if let apiKey = self?.config.revenueCatAPIKey, !apiKey.isEmpty, let uid = PHFirebase.userID {
+				if let apiKey = self?.config.revenueCatAPIKey, !apiKey.isEmpty, let uid = PHFirebase.userID, !Purchases.isConfigured {
 					Purchases.configure(withAPIKey: apiKey, appUserID: uid)
 #if DEBUG
 					Purchases.logLevel = .verbose
@@ -57,18 +59,7 @@ private extension PurchaseMessageHandler {
 				if let offering = offerings.offering(identifier: offeringID),
 				   let package = offering.availablePackages.first {
 					let result = try await Purchases.shared.purchase(package: package)
-					print(result)
 				}
-				
-//				let products = await Purchases.shared.products([offeringID])
-//				let product = products.first {
-//					$0.productIdentifier == offeringID
-//				}
-//				
-//				if let product {
-//					let result = try await Purchases.shared.purchase(product: product)
-//					print(result)
-//				}
 			} catch {
 				print("\(error)")
 			}
