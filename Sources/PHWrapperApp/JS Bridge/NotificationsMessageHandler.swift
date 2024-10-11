@@ -27,18 +27,29 @@ final class NotificationsMessageHandler: NSObject, MessageHandler {
 
 extension NotificationsMessageHandler {
 	func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+		print("received message: \(message.name)")
 		guard let data = message.body as? [String: Any] else { return }
+		
+		print("body: \(data)")
+		
 		guard let index = data["idx"] as? Int else { return }
-		guard let topic = data["topic"] as? String else { return }
+		
+		
 		
 		switch message.name {
 		case "subscribe":
+			guard let topic = data["topic"] as? String else { return }
+
 			notificationManager.subscribe(to: topic)
 			message.webView?.callback(index: index, value: "true")
 		case "unsubscribe":
+			guard let topic = data["topic"] as? String else { return }
+
 			notificationManager.unsubscribe(from: topic)
 			message.webView?.callback(index: index, value: "true")
 		case "isSubscribed":
+			guard let topic = data["topic"] as? String else { return }
+
 			let isSubscribed = notificationManager.isSubscribed(to: topic)
 			message.webView?.callback(index: index, value: isSubscribed ? "true" : "false")
 		case "getNotificationsStatus":

@@ -10,6 +10,7 @@ import WebKit
 import StoreKit
 import RevenueCat
 import Inject
+import RevenueCatUI
 
 
 final class PurchaseMessageHandler: NSObject, MessageHandler {
@@ -56,9 +57,18 @@ private extension PurchaseMessageHandler {
 				
 				let offerings = try await Purchases.shared.offerings()
 				
-				if let offering = offerings.offering(identifier: offeringID),
-				   let package = offering.availablePackages.first {
-					let result = try await Purchases.shared.purchase(package: package)
+				if let offering = offerings.offering(identifier: offeringID), let self, let webViewController {
+					
+					let controller = PaywallViewController(
+						offering: offering,
+						displayCloseButton: true
+					)
+					
+					controller.delegate = self
+					webViewController.present(controller, animated: true, completion: nil)
+					
+					
+					//let result = try await Purchases.shared.purchase(package: package)
 				}
 			} catch {
 				print("\(error)")
@@ -77,5 +87,9 @@ private extension PurchaseMessageHandler {
 }
 
 
-
+extension PurchaseMessageHandler: PaywallViewControllerDelegate {
+	func paywallViewControllerDidStartPurchase(_ controller: PaywallViewController) {
+		
+	}
+}
 

@@ -14,6 +14,7 @@ func dependencyInjection(with config: AppConfig) {
 		Registration(LoginMessageHandler() as MessageHandler)
 		Registration(NotificationManagerComponent() as NotificationManager)
 		Registration(SettingsMessageHandler() as MessageHandler)
+		Registration(NotificationsMessageHandler() as MessageHandler)
 		Registration(DeviceIdentifierMessageHandler() as MessageHandler)
 		Registration(SharingMessageHandler() as MessageHandler)
 		Registration(PurchaseMessageHandler() as MessageHandler)

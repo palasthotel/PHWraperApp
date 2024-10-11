@@ -53,7 +53,12 @@ extension PHFirebase {
 	}
 	
 	static func signIn(with loginToken: String) async throws {
-		try await Auth.auth().signIn(withCustomToken: loginToken)
+		do {
+			let result = try await Auth.auth().signIn(withCustomToken: loginToken)
+		} catch {
+			print("\(error)")
+			throw error
+		}
 		
 		guard let userID else {
 			return

@@ -28,6 +28,7 @@ let package = Package(
 				.product(name: "FirebaseAuth", package: "firebase-ios-sdk"),
 				.product(name: "FirebaseMessaging", package: "firebase-ios-sdk"),
 				.product(name: "RevenueCat", package: "purchases-ios-spm"),
+				.product(name: "RevenueCatUI", package: "purchases-ios-spm"),
 				.product(name: "ReceiptParser", package: "purchases-ios-spm"),
 			],
 			resources: [
