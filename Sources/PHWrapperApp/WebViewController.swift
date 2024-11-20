@@ -79,9 +79,9 @@ extension WebViewController {
 		if let topic = appConfig.testTopic {
 			notificationManager.subscribe(to: topic)
 		}
-		
-		notificationManager.subscribe(to: "firebase-notification-debug")
-		
+		#if DEBUG
+		notificationManager.subscribe(to: "firebase-push-debug")
+		#endif
 		NotificationCenter.default.addObserver(self, selector: #selector(handleAppNotification), name: UIApplication.didBecomeActiveNotification, object: nil)
 		NotificationCenter.default.addObserver(self, selector: #selector(handleAppNotification), name: UIApplication.didEnterBackgroundNotification, object: nil)
 	}
